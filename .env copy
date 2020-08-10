@@ -1,0 +1,6 @@
+DB_STAGING = 'mongodb://localhost:27017/radiiStaging'
+DB_REMOTE = 'radiiRemote'
+DB_REMOTE_CONNECT_URI = 'mongodb+srv://userName:Passwrod@cluster.mongodb.net/'
+DEVOPS_LEVEL = 'devel'
+APP_PORT = 5060
+APP_HOST = '127.0.0.1'

@@ -1,0 +1,43 @@
+<div class="container bg-faded py-3">
+    <h1 class="text-center">Centering in Bootstrap 4</h1>
+    <div class="row">
+        <div class="col text-center">use <code>.text-center</code> for display:inline elements</div>
+    </div>
+    <hr>
+    <div class="row">
+        {{#if data}}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">{{data.name}}</a></li>
+                <li class="breadcrumb-item">
+                    <button type="button" class="btn btn-outline-secondary">
+                        SubLevels <span class="badge badge-light">
+                            {{#if data.sublevels}}
+                            {{data.sublevels}}
+                            {{/if}}
+                            0
+                        </span>
+                    </button>
+                </li>
+                {{!-- <li class="breadcrumb-item active" aria-current="page">Data</li> --}}
+            </ol>
+        </nav>
+        <nav class="navbar navbar-default ">
+            <div class="container">
+                <p class="navbar-text active">Signed in as {{ pageparams.empId }}</p>
+                {{#unless data.sublevels}}
+                <p class="navbar-text "><a type="button" href="/levels/edit/{{data._id}}" class="btn btn-default navbar-btn">edit
+                        level</a></p>             
+                <p class="navbar-text "><a type="button" href="/subjects/turn/{{data._id}}"
+                        class="btn btn-default navbar-btn">Show
+                        Subjects</a></p>
+                {{/unless}}
+            </div>
+        </nav>
+        {{else}}
+        <p> level not selected<a type="button" href="/levels/" class="btn btn-default navbar-btn">Select a level</a></p>
+        {{/if}}
+    </div>
+    <hr>
+    <hr>
+</div>

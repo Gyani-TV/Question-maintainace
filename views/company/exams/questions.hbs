@@ -1,0 +1,158 @@
+
+
+<!-- 1. Add Person to Collection -->
+<div id="1" class="menu-div" style="display:none">
+    <form method="POST" action="/question" >
+
+        <span>Add a question to DB collection</span><hr><br>
+        <p>Please select your Question type:</p>
+        <input type="radio" id="short" name="Question_type" value="objective">
+        <label for="short">Objective</label>
+        <input type="radio" id="long" name="Question_type" value="descriptive">
+        <label for="long">Descriptive</label><br>
+        <!-- this is for making the Question -->
+            <label>Question caption:: Mandatory</label>
+            <textarea name="question" rows="5" rows="5" style="height:5em;" id ="Question body" required placeholder="What is the Question" ></textarea> <br>
+            <label>The score alloted for correctly attempting the above Question:: Mandatory</label>
+            <input type="text" name="score" required id ="score" class="field-divided" placeholder="the score for this Question" size=10  required/>
+            <div id="answers">
+                <label>Answer Caption:: Mandatory</label>
+                <input type="checkbox" id="correct1" name="option1" checked>
+                <textarea required name="answer" id ="answer" rows="5" style="height:10em;"  class="textarea" required placeholder="What is the Answer" >
+
+                </textarea> <br>
+            </div>
+                <input type="button" value="Add another text input" onClick="addOption('answers');">
+           
+            <!-- add an optinal uri for the answer this would let the test ee to learn better-->
+            <label>Add a Uri to support the answer, optional</label>
+            <input type="url" name="uri" id ="uri" class="field-divided" placeholder="support your answer" size=100><br><br>
+            <input type="submit" value="Create Question" />
+    </form>
+
+    <label >Response:</label>
+    <textarea name="response" id ="response"  readonly> 
+        {{!-- {{
+            toJson ui/data
+        }} --}}
+         </textarea>
+</div>
+
+
+<!-- 2. Get Persons -->
+<div id="2" class="menu-div" style="display:none">
+    <form method="GET" action="/questions" >
+        <span>List of questions</span><hr><br>
+        <input type="submit" value="List Questions" />
+    </form>
+
+    <br>
+    <label>Questions:</label>
+<textarea readonly>
+
+</textarea>
+    <br>
+    <label >Response:</label>
+    <textarea name="response" id ="response"  readonly></textarea>
+</div>
+
+<!-- 3. Update Questions -->
+<div id="3" class="menu-div" style="display:none">
+    <form method="POST" action="/question/update">
+        <span>Update Question </span><hr><br>
+        
+
+            <label>Mongo ID:: Mandatory</label>
+            <input type="text" name ="mongoid" id ="mongoid"  placeholder="Mongo ID" required> <br>
+
+            <label>Modify the score alloted for correctly attempting the above Question:: </label>
+            <input type="text" name="score_mod" id ="score_mod" placeholder="Modified Score"  size=35/>
+
+            <label>Modify the difficulty [defalut 1] for  the above Question:: </label>
+            <input type="range" name="difficulty_mod" id ="difficulty_mod"  min="0" max="50">
+
+            <label>Add/Modify The Supprting URI for this Question</label>
+            <input type="url" name="uri_mod" id ="uri_mod" class="field-divided" placeholder="Place your support url" size=50 required><br><br>
+            
+            <input type="submit" value="Update Person" />
+    </form>
+    <br>
+    <label >Response:</label>
+    <textarea name="response" id ="response"  readonly></textarea>
+</div>
+
+<!-- 4. Delete Persons -->
+<div id="4" class="menu-div" style="display:none">
+    <form method="POST" action="/question/delete" >    
+        <span>Delete question</span><hr><br>
+        <label>Mongo ID:</label>
+        <input placeholder ="Mongo ID" id ="mongoid" type="text" name ="mongoid" size=50 required><br><br>
+        <input type="submit" value="Delete question" />
+        <br>
+    </form>
+    <br>
+
+    <label >Response:</label>
+    <textarea name="response" id ="response"  readonly>  </textarea>
+</div>
+
+<!-- script for dynamically adding option input fields-->
+<script>
+var counter = 1;
+var limit = 4;
+function addOption(divName){
+     if (counter == limit)  {
+          alert("You have reached the limit of adding " + counter + " inputs");
+     }
+     else {
+          var newdiv = document.createElement('div');
+          // newdiv.classList.add('menu-div');
+          newdiv.innerHTML ="<p>Option " + (counter + 1) + " </p><br><input type='checkbox' name='correct"+(counter+1)+"' id='option"+(counter+1)+"'> <textarea rows='5' style='height:10em;' name='answer'> </textarea>";
+          document.getElementById(divName).appendChild(newdiv);
+          counter++;
+     }
+}
+
+// for text area dynamic resizing
+var observe;
+if (window.attachEvent) {
+    observe = function (element, event, handler) {
+        element.attachEvent('on'+event, handler);
+    };
+}
+else {
+    observe = function (element, event, handler) {
+        element.addEventListener(event, handler, false);
+    };
+}
+function loadTArea (ids) {
+for (var i = 0; i < ids.length; i++) 
+{
+    var text = document.getElementById(ids[i]);
+    function resize (el) {
+        el.style.height = 'auto';
+        el.style.height = text.scrollHeight+'px';
+    }
+    /* 0-timeout to get the already changed text */
+    function delayedResize () {
+        window.setTimeout(resize, 0);
+    }
+    observe(text, 'change',  resize);
+    observe(text, 'cut',     delayedResize);
+    observe(text, 'paste',   delayedResize);
+    observe(text, 'drop',    delayedResize);
+    observe(text, 'keydown', delayedResize);
+    text.focus();
+    text.select();
+    resize(text);
+}
+
+}
+function resizeTextarea(){
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+}
+var text = document.getElementsByTagName("textarea");
+for(var x = 0; x < text.length; x++)
+    text[x].onkeyup = resizeTextarea;
+</script>

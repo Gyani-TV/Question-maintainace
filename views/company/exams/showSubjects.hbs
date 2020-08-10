@@ -1,0 +1,60 @@
+<div class="container bg-faded py-3">
+    <h1 class="text-center">Centering in Bootstrap 4</h1>
+    <div class="row">
+        <div class="col text-center">use <code>.text-center</code> for display:inline elements</div>
+    </div>
+    <hr>
+    <div class="row">
+        {{#if data}}
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Panel heading</div>
+            <div class="panel-body">
+                <p>...</p>
+            </div>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Subject Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Edit Handle</th>
+                        <th scope="col">View Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each data }}
+                    {{log 'level' data level="debug"}}
+                    <tr>
+                        <th scope="row">{{@key}}</th>
+                        <td>{{name}}</td>
+                        <td>{{description.caption}}</td>
+                        <td><a type="button" href="/subjects/edit/{{_id}}">edit this subject</a></td>
+                        <td><a type="button" href="/questions/turn?subject={{_id}}">Get questionaire</a></td>
+                    </tr>
+                    {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+        <nav class="navbar navbar-default ">
+            <div class="container">
+                <p class="navbar-text active">Signed in as {{ pageparams.empId }}</p>
+                <p class="navbar-text "><a type="button" href="/subjects/add/{{levelSelected}}" class="btn btn-default navbar-btn">Add a subject here</a></p>
+            </div>
+        </nav>
+        {{else}}
+        <p> {{refrain}}<br>
+         <nav class="navbar navbar-default ">
+            <div class="container">
+                <p class="navbar-text active">Signed in as {{ pageparams.empId }}</p>
+                <p class="navbar-text "><a type="button" href="/subjects/add/{{levelSelected}}" class="btn btn-default navbar-btn">Add a subject</a></p>
+            </div>
+        </nav>
+        {{/if}}
+    </div>
+    <hr>
+    <hr>
+</div>
